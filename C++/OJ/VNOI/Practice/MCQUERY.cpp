@@ -147,6 +147,7 @@ int main()
 		{
 			cin >> a;
 			int k = distance(f.begin(), lower_bound(f.begin(), f.end(), a));
+			// distance(a, b) : Calculates the number of elements between a and b. (a, b : iterator)
 			while (f[k] > a) --k;
 			cout << c[k] << '\n';
 		}

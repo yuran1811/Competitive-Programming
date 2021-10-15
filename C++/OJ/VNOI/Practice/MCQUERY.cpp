@@ -40,9 +40,9 @@ struct Graph
 	ll DFS(int u, int t, ll Min)
 	{
 		if (u == t) return Min;
-		for (int &i = iter[u]; i < int (a[u].size()); i++)
+		for (int &i = iter[u]; i < int (a[u].size()); i++) // also can : for (Edge &e : a[u]) instead of using vector <int> iter, but can be slower
 		{
-			Edge &e = a[u][i];
+			Edge &e = a[u][i]; // this line can be deleted if don't use the vector <int> iter
 			if (e.f > 0 && d[u] < d[e.v])
 				if (ll f = DFS(e.v, t, min(Min, e.f)))
 					return e.f -= f, a[e.v][e.rev].f += f, f;
@@ -58,7 +58,7 @@ struct Graph
 		{
 			int u = q.front(); q.pop();
 			if (u == t) break;
-			for (auto &e : a[u])
+			for (Edge &e : a[u])
 				if (e.f > 0 && d[e.v] < 0)
 					q.push(e.v), d[e.v] = d[u] + 1;
 		}
@@ -68,12 +68,12 @@ struct Graph
 	ll maxFlow(int s, int t)
 	{
 		for (int u = 0; u < n; u++)
-			for (auto &e : a[u]) e.f = e.capacity;
+			for (Edge &e : a[u]) e.f = e.capacity;
 
 		ll flow = 0;
 		while (BFS(s, t) >= 0)
 		{
-			iter.assign(n, 0);
+			iter.assign(n, 0); // this line can be deleted if don't use
 			for (ll x; (x = DFS(s, t, oo)); flow += x);
 		}
 		return flow;
